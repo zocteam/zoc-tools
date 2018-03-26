@@ -78,7 +78,6 @@ install_preqs()
 	sudo add-apt-repository -y ppa:bitcoin/bitcoin
 	sudo apt update 
 	sudo apt upgrade -y 
-	sudo apt install -y build-essential libtool autotools-devautomake pkg-config libssl-dev libevent-dev bsdmainutils libboost-all-dev libdb4.8-dev libdb4.8++-dev python-virtualenv nano git
 	sudo apt install -y build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils libboost-all-dev libdb4.8-dev libdb4.8++-dev python-virtualenv nano git
 }
 
