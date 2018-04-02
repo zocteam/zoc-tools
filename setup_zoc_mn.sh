@@ -11,7 +11,7 @@ configQuestions()
 	echo "*******************************************************************************"
 
 	#IP
-	vpsip="$(dig +short myip.opendns.com @resolver1.opendns.com)" 
+	vpsip=$(dig +short myip.opendns.com @resolver1.opendns.com)
 	while true; do
 		read -p "Is Your VPS IP: ${vpsip} ? [Y/N]" yn
 		case $yn in
@@ -86,12 +86,24 @@ download()
 	echo "*******************************************************************************"
 	echo "                     Downloading Installing ZeroOneCoin"
 	echo "*******************************************************************************"
-
 	mkdir zeroone
 	cd zeroone
-	wget https://github.com/zeroonecoin/zeroonecoin/raw/master/release/zeroone-linux.tar.gz
-	tar -xvf zeroone-linux.tar.gz
-	rm zeroone-linux.tar.gz
+
+	if [ "$release" = '14.04' ] 
+	then
+		wget https://github.com/zocteam/zeroonecoin/releases/download/v0.12.1.4-rc/zeroone-linux-Ubuntu-14.04.tar.gz
+		tar -xvf zeroone-linux-Ubuntu-14.04.tar.gz
+		rm zeroone-linux-Ubuntu-14.04.tar.gz
+	fi
+	if [ "$release" = '16.04' ] 
+	then
+	#Only needed for 16.04
+		sudo apt-get install -y libminiupnpc-dev 
+		wget https://github.com/zocteam/zeroonecoin/releases/download/v0.12.1.4-rc/zeroone-linux-Ubuntu-16.04.tar.gz
+		tar -xvf zeroone-linux-Ubuntu-16.04.tar.gz
+		rm zeroone-linux-Ubuntu-16.04.tar.gz
+	fi
+	
 	cd ..
 	mkdir .zeroonecore
 }
@@ -132,7 +144,6 @@ start_mn()
 	echo "                       Starting ZeroOneCoin Masternode"
 	echo "*******************************************************************************"
 
-
 	zeroone/zerooned -daemon
 
 	echo 'If The Above Says "ZeroOne Core server starting" Then Masternode is Installed' 
@@ -157,6 +168,32 @@ adds_nodes()
 	#Kill off the program
 	exit 1
 }
+
+compile()
+{
+#checks ram and makes swap if nessary
+ram="$(awk '/MemTotal/ {print $2}' /proc/meminfo)"
+minram="1048576"
+if [ "$ram" -le "$minram" ]
+then
+dd if=/dev/zero of=/swapfile count=2048 bs=1M
+chmod 600 /swapfile
+mkswap /swapfile
+swapon /swapfile
+echo "/swapfile   none    swap    sw    0   0" > /etc/fstab
+fi
+# Download and Compile 
+git clone https://github.com/zocteam/zeroonecoin
+cd zeroonecoin
+sudo ./autogen.sh
+sudo ./configure CXXFLAGS="--param ggc-min-expand=1 --param ggc-min-heapsize=32768"
+cpucores = grep -c ^processor /proc/cpuinfo
+sudo make -j$cpucores
+mkdir ~/zeroone
+mv ~/zeroonecoin/src/zerooned ~/zeroone/zerooned
+mv ~/zeroonecoin/src/zeroone-cli ~/zeroone/zeroone-cli
+mv ~/zeroonecoin/src/zeroone-tx ~/zeroone/zeroone-tx
+}
 info()
 {
 
@@ -171,7 +208,20 @@ info()
 	echo "*******************************************************************************"
 
 }
+install_mn(){
+#Checks Versions
+release=$(lsb_release -r -s)
+case $release in
+"14.04")
+	download;;
 
+"16.04")
+	download;;
+
+*)
+	compile;;
+	esac
+}
 #checks args then runs the functions
 case $1 in
 nodes)
@@ -182,10 +232,19 @@ Nodes)
 
 addnodes)
 	adds_nodes;;
+	
+compile)
+	configQuestions
+	install_preqs
+	compile
+	config
+	addnodes
+	start_mn
+	info;;
 *)
 	configQuestions
 	install_preqs
-	download
+	install_mn
 	config
 	addnodes
 	start_mn
