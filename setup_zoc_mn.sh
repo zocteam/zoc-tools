@@ -86,25 +86,22 @@ download()
 	echo "*******************************************************************************"
 	echo "                     Downloading Installing ZeroOneCoin"
 	echo "*******************************************************************************"
-	mkdir zeroone
-	cd zeroone
-
+	
 	if [ "$release" = '14.04' ] 
 	then
-		wget https://github.com/zocteam/zeroonecoin/releases/download/v0.12.1.4-rc/zeroone-linux-Ubuntu-14.04.tar.gz
-		tar -xvf zeroone-linux-Ubuntu-14.04.tar.gz
-		rm zeroone-linux-Ubuntu-14.04.tar.gz
+		wget https://github.com/zocteam/zeroonecoin/releases/download/V0.12.1.6/zeroone-linux.tar.gz
+		tar -xvf zeroone-linux.tar.gz
+		rm zeroone-linux.tar.gz
 	fi
 	if [ "$release" = '16.04' ] 
 	then
 	#Only needed for 16.04
 		sudo apt-get install -y libminiupnpc-dev 
-		wget https://github.com/zocteam/zeroonecoin/releases/download/v0.12.1.4-rc/zeroone-linux-Ubuntu-16.04.tar.gz
-		tar -xvf zeroone-linux-Ubuntu-16.04.tar.gz
-		rm zeroone-linux-Ubuntu-16.04.tar.gz
+		wget https://github.com/zocteam/zeroonecoin/releases/download/V0.12.1.6/zeroone-linux.tar.gz
+		tar -xvf zeroone-linux.tar.gz
+		rm zeroone-linux.tar.gz
 	fi
 	
-	cd ..
 	mkdir .zeroonecore
 }
 
