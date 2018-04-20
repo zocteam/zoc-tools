@@ -231,7 +231,7 @@ case $release in
 }
 setup_manager()
 {
-killall
+killall zerooned
 wget https://raw.githubusercontent.com/zocteam/zoc-tools/master/mnchecker
 chmod 777 mnchecker
 echo "rpcport=10101" >> .zeroonecore/zeroone.conf
