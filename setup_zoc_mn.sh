@@ -66,6 +66,16 @@ configQuestions()
 			* ) echo "Please answer yes or no.";;
 		esac
 	done
+	
+	echo "**************************************************************"
+	while true; do
+		read -p "Would You Like To Install An Node Manager To Keep The Block Chain Synced?[Y/N]" yn
+		case $yn in
+			[Yy]* ) setup_manager;break;;
+			[Nn]* ) break;;
+			* ) echo "Please answer yes or no.";;
+		esac
+	done
 }
 
 install_preqs()
