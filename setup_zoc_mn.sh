@@ -219,6 +219,15 @@ case $release in
 	compile;;
 	esac
 }
+setup_manager()
+{
+killall
+wget https://raw.githubusercontent.com/zocteam/zoc-tools/master/mnchecker
+chmod 777 mnchecker
+echo "rpcport=10101" >> .zeroonecore/zeroone.conf
+sudo echo "*/10 * * * * /root/mnchecker --currency-bin-cli=/root/zeroone/zeroone-cli --currency-bin-daemon=/root/zeroone/zerooned --currency-datadir=.zeroonecore" >> /etc/crontab
+
+}
 #checks args then runs the functions
 case $1 in
 nodes)
@@ -238,6 +247,8 @@ compile)
 	addnodes
 	start_mn
 	info;;
+manager)
+	setup_manager;;
 *)
 	configQuestions
 	install_preqs
