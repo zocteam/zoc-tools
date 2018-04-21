@@ -129,22 +129,6 @@ config()
 	echo "maxconnections=25" >> .zeroonecore/zeroone.conf
 }
 
-addnodes()
-{
-	echo "addnode=103.69.195.185:58848" >> .zeroonecore/zeroone.conf
-	echo "addnode=13.56.174.183:10000" >> .zeroonecore/zeroone.conf
-	echo "addnode=13.59.197.120:10000" >> .zeroonecore/zeroone.conf
-	echo "addnode=144.202.17.171:10000" >> .zeroonecore/zeroone.conf
-	echo "addnode=174.138.10.244:10000" >> .zeroonecore/zeroone.conf
-	echo "addnode=185.224.249.58:45325" >> .zeroonecore/zeroone.conf
-	echo "addnode=213.183.51.7:10000" >> .zeroonecore/zeroone.conf
-	echo "addnode=45.32.6.178:34558" >> .zeroonecore/zeroone.conf
-	echo "addnode=62.77.153.115:10000" >> .zeroonecore/zeroone.conf
-	echo "addnode=79.165.207.31:57377" >> .zeroonecore/zeroone.conf
-	echo "addnode=90.145.172.88:10000" >> .zeroonecore/zeroone.conf
-	echo "addnode=90.156.157.28:10000" >> .zeroonecore/zeroone.conf
-}
-
 start_mn()
 {
 	echo "*******************************************************************************"
@@ -179,27 +163,27 @@ adds_nodes()
 compile()
 {
 #checks ram and makes swap if nessary
-ram="$(awk '/MemTotal/ {print $2}' /proc/meminfo)"
-minram="1048576"
-if [ "$ram" -le "$minram" ]
-then
-dd if=/dev/zero of=/swapfile count=2048 bs=1M
-chmod 600 /swapfile
-mkswap /swapfile
-swapon /swapfile
-echo "/swapfile   none    swap    sw    0   0" > /etc/fstab
-fi
-# Download and Compile 
-git clone https://github.com/zocteam/zeroonecoin
-cd zeroonecoin
-sudo ./autogen.sh
-sudo ./configure CXXFLAGS="--param ggc-min-expand=1 --param ggc-min-heapsize=32768"
-cpucores = grep -c ^processor /proc/cpuinfo
-sudo make -j$cpucores
-mkdir ~/zeroone
-mv ~/zeroonecoin/src/zerooned ~/zeroone/zerooned
-mv ~/zeroonecoin/src/zeroone-cli ~/zeroone/zeroone-cli
-mv ~/zeroonecoin/src/zeroone-tx ~/zeroone/zeroone-tx
+	ram="$(awk '/MemTotal/ {print $2}' /proc/meminfo)"
+	minram="1048576"
+	if [ "$ram" -le "$minram" ]
+	then
+		dd if=/dev/zero of=/swapfile count=2048 bs=1M
+		chmod 600 /swapfile
+		mkswap /swapfile
+		swapon /swapfile
+		echo "/swapfile   none    swap    sw    0   0" > /etc/fstab
+	fi
+	# Download and Compile 
+	git clone https://github.com/zocteam/zeroonecoin
+	cd zeroonecoin
+	sudo ./autogen.sh
+	sudo ./configure CXXFLAGS="--param ggc-min-expand=1 --param ggc-min-heapsize=32768"
+	cpucores = grep -c ^processor /proc/cpuinfo
+	sudo make -j$cpucores
+	mkdir ~/zeroone
+	mv ~/zeroonecoin/src/zerooned ~/zeroone/zerooned
+	mv ~/zeroonecoin/src/zeroone-cli ~/zeroone/zeroone-cli
+	mv ~/zeroonecoin/src/zeroone-tx ~/zeroone/zeroone-tx
 }
 info()
 {
@@ -231,30 +215,21 @@ case $release in
 }
 setup_manager()
 {
-killall zerooned
-wget https://raw.githubusercontent.com/zocteam/zoc-tools/master/mnchecker
-chmod 777 mnchecker
-echo "rpcport=10101" >> .zeroonecore/zeroone.conf
-sudo echo "*/10 * * * * /root/mnchecker --currency-bin-cli=/root/zeroone/zeroone-cli --currency-bin-daemon=/root/zeroone/zerooned --currency-datadir=.zeroonecore" >> /etc/crontab
+	killall zerooned
+	wget https://raw.githubusercontent.com/zocteam/zoc-tools/master/mnchecker
+	chmod 777 mnchecker
+	echo "rpcport=10101" >> .zeroonecore/zeroone.conf
+	sudo echo "*/10 * * * * /root/mnchecker --currency-bin-cli=/root/zeroone/zeroone-cli --currency-bin-daemon=/root/zeroone/zerooned --currency-datadir=.zeroonecore" >> /etc/crontab
 
 }
 #checks args then runs the functions
 case $1 in
-nodes)
-	adds_nodes;;
-
-Nodes)
-	adds_nodes;;
-
-addnodes)
-	adds_nodes;;
 	
 compile)
 	configQuestions
 	install_preqs
 	compile
 	config
-	addnodes
 	start_mn
 	info;;
 manager)
@@ -264,7 +239,6 @@ manager)
 	install_preqs
 	install_mn
 	config
-	addnodes
 	start_mn
 	info
 ;;
