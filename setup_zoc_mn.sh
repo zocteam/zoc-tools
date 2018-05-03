@@ -21,38 +21,22 @@ configQuestions()
 		esac
 	done
 
-	#RPC Username
-	echo "Please Enter Your rpcuser"
-	read rpcuser
+	rpcuser=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-32})
+	rpcpassword=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-32})
+	
+	#Needed to be appended to the file before ask for incase of want to gen key Privatekey
+	if [ ! -d ".zeroonecore" ]; then
+		mkdir .zeroonecore 
+	fi
+	
+	echo "rpcuser=${rpcuser}" >> .zeroonecore/zeroone.conf
+	echo "rpcpassword=${rpcpassword}" >> .zeroonecore/zeroone.conf
+	
 	while true; do
-		read -p "Is This The Correct rpcuser : ${rpcuser} ? [Y/N]" yn
+		read -p "Would You Like To Provide An Private key  : ${privkey} ? [Y/N]" yn
 		case $yn in
-			[Yy]* ) break;;
-			[Nn]* ) echo "Please Type In The Correct rpcuser"; read rpcuser;;
-			* ) echo "Please answer yes or no.";;
-		esac
-	done
-
-	#RPC Pasword
-	echo "Please Enter Your rpcpassword"
-	read rpcpassword
-	while true; do
-		read -p "Is This The Correct rpcpassword : ${rpcpassword} ? [Y/N]" yn
-		case $yn in
-			[Yy]* ) break;;
-			[Nn]* ) echo "Please Type In The Correct rpcpassword"; read rpcpassword;;
-			* ) echo "Please answer yes or no.";;
-		esac
-	done
-
-	#Masternode Priv Key
-	echo "Please Enter Your privkey"
-	read privkey
-	while true; do
-		read -p "Is This The Correct privkey : ${privkey} ? [Y/N]" yn
-		case $yn in
-			[Yy]* ) break;;
-			[Nn]* ) echo "Please Type In The Correct privkey"; read privkey;;
+			[Yy]* ) askforprivatekey;break;;
+			[Nn]* ) genkey;break;;
 			* ) echo "Please answer yes or no.";;
 		esac
 	done
@@ -61,7 +45,7 @@ configQuestions()
 	while true; do
 		read -p "Would You Like An Shell Scipt To Start The Node?[Y/N]" yn
 		case $yn in
-			[Yy]* ) echo "zeroone/zerooned -daemon ">> startZeroOne.sh;break;;
+			[Yy]* ) echo "zeroone/zerooned -daemon ">> startZeroOne.sh;askstartonboot;break;;
 			[Nn]* ) break;;
 			* ) echo "Please answer yes or no.";;
 		esac
@@ -88,7 +72,7 @@ install_preqs()
 	sudo add-apt-repository -y ppa:bitcoin/bitcoin
 	sudo apt update 
 	sudo apt upgrade -y 
-	sudo apt install -y build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils libboost-all-dev libdb4.8-dev libdb4.8++-dev python-virtualenv nano git
+	sudo apt install -y build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils libboost-all-dev libdb4.8-dev libdb4.8++-dev python-virtualenv nano git openssl
 }
 
 download()
@@ -119,10 +103,8 @@ config()
 {
 	echo "*******************************************************************************"
 	echo "                      Configing ZeroOneCoin Masternode"
-	echo "*******************************************************************************"
-
-	echo "rpcuser=${rpcuser}" >> .zeroonecore/zeroone.conf
-	echo "rpcpassword=${rpcpassword}" >> .zeroonecore/zeroone.conf
+	echo "*******************************************************************************" 
+	
 	echo "externalip=${vpsip}:10000" >> .zeroonecore/zeroone.conf
 	echo "masternode=1" >> .zeroonecore/zeroone.conf
 	echo "masternodeprivkey=${privkey}" >> .zeroonecore/zeroone.conf
@@ -185,6 +167,46 @@ compile()
 	mv ~/zeroonecoin/src/zeroone-cli ~/zeroone/zeroone-cli
 	mv ~/zeroonecoin/src/zeroone-tx ~/zeroone/zeroone-tx
 }
+
+askforprivatekey(){
+#Masternode Priv Key
+	read privkey
+	while true; do
+		read -p "Is This The Correct Private Key : ${privkey} ? [Y/N]" yn
+		case $yn in
+			[Yy]* ) break;;
+			[Nn]* ) echo "Please Type In The Correct Private Key"; read privkey;;
+			* ) echo "Please answer yes or no.";;
+		esac
+	done
+}
+
+askstartonboot(){
+echo "**************************************************************"
+	while true; do
+		read -p "Would You Like To Start The Node On Boot?[Y/N]" yn
+		case $yn in
+			[Yy]* ) startonboot;break;;
+			[Nn]* ) break;;
+			* ) echo "Please answer yes or no.";;
+		esac
+	done
+}
+
+startonboot(){
+	chmod -x startZeroOne.sh
+	chmod 777 startZeroOne.sh
+	sudo echo "@reboot /root/startZeroOne.sh" >> /etc/crontab
+}
+
+genkey()
+{
+		zeroone/zerooned -daemon
+		echo "Waiting for ZeroOne To Start So Can Genkey"
+		sleep 10
+		privkey=$(zeroone/zeroone-cli masternode genkey)
+		killall zerooned
+}
 info()
 {
 
@@ -199,6 +221,7 @@ info()
 	echo "*******************************************************************************"
 
 }
+
 install_mn(){
 #Checks Versions
 release=$(lsb_release -r -s)
@@ -224,7 +247,6 @@ setup_manager()
 }
 #checks args then runs the functions
 case $1 in
-	
 compile)
 	configQuestions
 	install_preqs
@@ -235,9 +257,9 @@ compile)
 manager)
 	setup_manager;;
 *)
+	install_mn
 	configQuestions
 	install_preqs
-	install_mn
 	config
 	start_mn
 	info
