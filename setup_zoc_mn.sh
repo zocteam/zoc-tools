@@ -121,6 +121,7 @@ start_mn()
 
 	echo 'If The Above Says "ZeroOne Core server starting" Then Masternode is Installed' 
 	echo "On Your Wallet Please Append the Following In The Masternode.conf"
+	echo ""
 	echo "MN-X ${vpsip}:10000 ${privkey} collateral_output_txid collateral_output_index"
 }
 
@@ -248,18 +249,18 @@ setup_manager()
 #checks args then runs the functions
 case $1 in
 compile)
-	configQuestions
 	install_preqs
 	compile
+	configQuestions
 	config
 	start_mn
 	info;;
 manager)
 	setup_manager;;
 *)
+	install_preqs
 	install_mn
 	configQuestions
-	install_preqs
 	config
 	start_mn
 	info
