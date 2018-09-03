@@ -65,7 +65,7 @@ configQuestions()
 install_preqs()
 {
 	echo "*******************************************************************************"
-	echo "                           Installing Prequirements"
+	echo "                           Installing Requirements"
 	echo "*******************************************************************************"
 
 	sudo apt install -y software-properties-common
@@ -81,20 +81,16 @@ download()
 	echo "                     Downloading Installing ZeroOneCoin"
 	echo "*******************************************************************************"
 	
-	if [ "$release" = '14.04' ] 
-	then
-		wget https://github.com/zocteam/zeroonecoin/releases/download/V0.12.1.6/zeroone-linux.tar.gz
-		tar -xvf zeroone-linux.tar.gz
-		rm zeroone-linux.tar.gz
-	fi
 	if [ "$release" = '16.04' ] 
 	then
 	#Only needed for 16.04
 		sudo apt-get install -y libminiupnpc-dev 
-		wget https://github.com/zocteam/zeroonecoin/releases/download/V0.12.1.6/zeroone-linux.tar.gz
-		tar -xvf zeroone-linux.tar.gz
-		rm zeroone-linux.tar.gz
 	fi
+	mkdir zeroone
+	wget http://files.01coin.io/build/linux/zeroonecore-0.12.3-x86_64-linux-gnu.tar.gz
+	tar -xvf zeroonecore-0.12.3-x86_64-linux-gnu.tar.gz
+	rm zeroonecore-0.12.3-x86_64-linux-gnu.tar.gz
+	mv zeroonecore-0.12.3/bin/* zeroone/
 	
 	mkdir .zeroonecore
 }
@@ -117,7 +113,7 @@ start_mn()
 	echo "                       Starting ZeroOneCoin Masternode"
 	echo "*******************************************************************************"
 
-	zeroone/zerooned -daemon
+	zeroone/zerooned -daemon -assumevalid=0000000005812118515c654ab36f46ef2b7b3732a6115271505724ff972417c7
 
 	echo 'If The Above Says "ZeroOne Core server starting" Then Masternode is Installed' 
 	echo "On Your Wallet Please Append the Following In The Masternode.conf"
@@ -205,6 +201,9 @@ genkey()
 		zeroone/zerooned -daemon
 		echo "Waiting for ZeroOne To Start So Can Genkey"
 		sleep 10
+		while ! zeroone/zeroone-cli getinfo; do
+			sleep 10
+		done
 		privkey=$(zeroone/zeroone-cli masternode genkey)
 		killall zerooned
 }
