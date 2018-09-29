@@ -107,6 +107,28 @@ config()
 	echo "maxconnections=25" >> .zeroonecore/zeroone.conf
 }
 
+sentinel()
+{
+	echo "*******************************************************************************"
+	echo "                         Installing 01coin Sentinel"
+	echo "*******************************************************************************" 
+	
+	cd ~
+	
+	sudo apt-get update
+	sudo apt-get -y install python-virtualenv virtualenv
+	
+	git clone https://github.com/zocteam/sentinel.git zoc_sentinel
+	cd zoc_sentinel
+	virtualenv ./venv
+	./venv/bin/pip install -r requirements.txt
+
+	crontab -l > mycron
+	echo "* * * * * cd $(pwd) && SENTINEL_DEBUG=1 ./venv/bin/python bin/sentinel.py >> zoc_sentinel.log >/dev/null 2>&1" >> mycron
+	crontab mycron
+	rm mycron
+}
+
 start_mn()
 {
 	echo "*******************************************************************************"
