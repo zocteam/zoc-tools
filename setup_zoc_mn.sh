@@ -276,6 +276,7 @@ compile)
 	configQuestions
 	config
 	start_mn
+	sentinel
 	info;;
 manager)
 	setup_manager;;
@@ -285,6 +286,7 @@ manager)
 	configQuestions
 	config
 	start_mn
+	sentinel
 	info
 ;;
 esac
