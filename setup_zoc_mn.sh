@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "*******************************************************************************"
-echo "               Zero One Coin Masternode Setup Shell Scipt"
-echo "                               Created by Evydder"
+echo "                     01coin Masternode Setup Shell Script"
+echo "                              Created by Evydder"
 echo "*******************************************************************************"
 
 configQuestions()
@@ -13,10 +13,10 @@ configQuestions()
 	#IP
 	vpsip=$(dig +short myip.opendns.com @resolver1.opendns.com)
 	while true; do
-		read -p "Is Your VPS IP: ${vpsip} ? [Y/N]" yn
+		read -p "Is this your VPS IP address? ${vpsip} [Y/N]" yn
 		case $yn in
 			[Yy]* ) break;;
-			[Nn]* ) echo "Please Type In Your VPS IP"; read vpsip;;
+			[Nn]* ) echo "Please type in your VPS IP address"; read vpsip;;
 			* ) echo "Please answer yes or no.";;
 		esac
 	done
@@ -33,7 +33,7 @@ configQuestions()
 	echo "rpcpassword=${rpcpassword}" >> .zeroonecore/zeroone.conf
 	
 	while true; do
-		read -p "Would You Like To Provide An Private key  : ${privkey} ? [Y/N]" yn
+		read -p "Would you like to provide a private key (if you already have one)? ${privkey} [Y/N]" yn
 		case $yn in
 			[Yy]* ) askforprivatekey;break;;
 			[Nn]* ) genkey;break;;
@@ -43,7 +43,7 @@ configQuestions()
 
 	echo "**************************************************************"
 	while true; do
-		read -p "Would You Like An Shell Scipt To Start The Node?[Y/N]" yn
+		read -p "Would you like a shell scipt to start the node?  [Y/N]" yn
 		case $yn in
 			[Yy]* ) echo "zeroone/zerooned -daemon ">> startZeroOne.sh;askstartonboot;break;;
 			[Nn]* ) break;;
@@ -53,7 +53,7 @@ configQuestions()
 	
 	echo "**************************************************************"
 	while true; do
-		read -p "Would You Like To Install An Node Manager To Keep The Block Chain Synced?[Y/N]" yn
+		read -p "Would you like to install a node manager to keep the blockchain synced?  [Y/N]" yn
 		case $yn in
 			[Yy]* ) setup_manager;break;;
 			[Nn]* ) break;;
@@ -78,7 +78,7 @@ install_preqs()
 download()
 {
 	echo "*******************************************************************************"
-	echo "                     Downloading Installing ZeroOneCoin"
+	echo "                      Downloading and Installing 01coin"
 	echo "*******************************************************************************"
 	
 	if [ "$release" = '16.04' ] 
@@ -98,7 +98,7 @@ download()
 config()
 {
 	echo "*******************************************************************************"
-	echo "                      Configing ZeroOneCoin Masternode"
+	echo "                        Configuring 01coin Masternode"
 	echo "*******************************************************************************" 
 	
 	echo "externalip=${vpsip}:10000" >> .zeroonecore/zeroone.conf
@@ -107,16 +107,38 @@ config()
 	echo "maxconnections=25" >> .zeroonecore/zeroone.conf
 }
 
+sentinel()
+{
+	echo "*******************************************************************************"
+	echo "                         Installing 01coin Sentinel"
+	echo "*******************************************************************************" 
+	
+	cd ~
+	
+	sudo apt-get update
+	sudo apt-get -y install python-virtualenv virtualenv
+	
+	git clone https://github.com/zocteam/sentinel.git zoc_sentinel
+	cd zoc_sentinel
+	virtualenv ./venv
+	./venv/bin/pip install -r requirements.txt
+
+	crontab -l > mycron
+	echo "* * * * * cd $(pwd) && SENTINEL_DEBUG=1 ./venv/bin/python bin/sentinel.py >> zoc_sentinel.log >/dev/null 2>&1" >> mycron
+	crontab mycron
+	rm mycron
+}
+
 start_mn()
 {
 	echo "*******************************************************************************"
-	echo "                       Starting ZeroOneCoin Masternode"
+	echo "                         Starting 01coin Masternode"
 	echo "*******************************************************************************"
 
 	zeroone/zerooned -daemon -assumevalid=0000000005812118515c654ab36f46ef2b7b3732a6115271505724ff972417c7
 
-	echo 'If The Above Says "ZeroOne Core server starting" Then Masternode is Installed' 
-	echo "On Your Wallet Please Append the Following In The Masternode.conf"
+	echo 'If the above says "ZeroOne Core server starting" then masternode is installed' 
+	echo "In your wallet please append the following to masternode.conf"
 	echo ""
 	echo "MN-X ${vpsip}:10000 ${privkey} collateral_output_txid collateral_output_index"
 }
@@ -129,9 +151,9 @@ adds_nodes()
 		mkdir .zeroonecore 
 	fi	
 	addnodes
-	#Reason for not starting it manuly is i don't know where its installed
+	#Reason for not starting it manually is I don't know where it's installed
 	echo "*******************************************************************************"
-	echo "                    Please Manualy Start Your Masternode"
+	echo "                    Please Manually Start Your Masternode"
 	echo "*******************************************************************************"
 
 	info
@@ -181,7 +203,7 @@ askforprivatekey(){
 askstartonboot(){
 echo "**************************************************************"
 	while true; do
-		read -p "Would You Like To Start The Node On Boot?[Y/N]" yn
+		read -p "Would you like to start the node automatically on boot?  [Y/N]" yn
 		case $yn in
 			[Yy]* ) startonboot;break;;
 			[Nn]* ) break;;
@@ -211,12 +233,12 @@ info()
 {
 
 	echo "*******************************************************************************"
-	echo "To Manual Start The Node Run              : zeroone/zerooned -daemon "
-	echo "To Check The Status Of The Masternode Run : zeroone/zeroone-cli getinfo "
+	echo "To manually start the node run            : zeroone/zerooned -daemon "
+	echo "To check the status of the masternode run : zeroone/zeroone-cli getinfo "
 	echo ""
-	echo "If You Require Any Help Ask On The Discord Server : https://discord.gg/jbMjjnV"
+	echo "If you require any help ask in the Discord server: https://discord.gg/jbMjjnV"
 	echo ""
-	echo "If This Helps You Out And You Want To Tip :"
+	echo "If this helps you out and you want to tip :"
 	echo "(ZOC) ZNZL6JXTeF3nP8fSWf46wbRqAMjLezyRHK"
 	echo "*******************************************************************************"
 
@@ -245,6 +267,7 @@ setup_manager()
 	sudo echo "*/10 * * * * /root/mnchecker --currency-bin-cli=/root/zeroone/zeroone-cli --currency-bin-daemon=/root/zeroone/zerooned --currency-datadir=.zeroonecore" >> /etc/crontab
 
 }
+
 #checks args then runs the functions
 case $1 in
 compile)
