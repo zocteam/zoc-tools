@@ -8,3 +8,6 @@ this is a complete setup script for installing ZOC MN on a linux ubuntu VPS, inc
 
 ## zoc_max_coin_limit.py
 this is a simple python script to help calculate the ZOC max coin supply (including premine, that is mainly all burned)
+
+## zeroone.sh
+this is the 01Coin Masternode vps menu 'user friend' utils, to ease the calls to the masternode cli to: start, stop, getinfo, mnsync status, masternode status, masternodelist (wallet) status, and other tools like restart with reindex, restart with latest bootstrap, call sentinel with debug, edit with nano configuration files, edit crontab, etc.
