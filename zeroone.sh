@@ -33,7 +33,7 @@ menu_basic() {
             [6]* ) masternodelist_status;;
             [7]* ) quit;;
             [8]* ) break;;
-			[9]* ) menu_debug; clear; print_menu_basic;;
+            [9]* ) menu_debug; clear; print_menu_basic;;
             * ) clear; print_menu_basic; echo "Please select an option.";;
         esac
     done
