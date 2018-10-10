@@ -160,6 +160,14 @@ masternode_status() {
     echo ""
 }
 
+mn_queue(){
+    zeroone/zeroone-cli masternode list full \
+        | grep "[^_]ENABLED 7" \
+        | awk -v date="$(date +%s)" '{as=date-$7; mst=(as>$8?as:$8); sep="\t" ; print mst sep date sep $5 sep $7 sep $8 sep as}' \
+        | sort -s -k1,1n \
+        | awk '{print NR "\t" $0}'
+}
+
 masternodelist_status() {
     cd ~
     payee=$(zeroone/zeroone-cli masternode status | grep payee | awk -F\" {'print $4'})
@@ -171,6 +179,9 @@ masternodelist_status() {
       echo "zeroone/zeroone-cli masternodelist json ${payee}"
       zeroone/zeroone-cli masternodelist json ${payee}
       #zeroone/zeroone-cli masternodelist json ${vpsip}
+      echo ""
+      mnpos=$(mn_queue | grep ${payee} | awk -F\  '{print $1}')
+      echo "will have luck to be a winner in about $mnpos blocks ~ $(($mnpos*150/3600)) hours."
     fi
     echo ""
 }

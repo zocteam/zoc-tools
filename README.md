@@ -11,3 +11,7 @@ this is a simple python script to help calculate the ZOC max coin supply (includ
 
 ## zeroone.sh
 this is the 01Coin Masternode vps menu 'user friend' utils, to ease the calls to the masternode cli to: start, stop, getinfo, mnsync status, masternode status, masternodelist (wallet) status, and other tools like restart with reindex, restart with latest bootstrap, call sentinel with debug, edit with nano configuration files, edit crontab, etc.
+
+## zoc_mn_queue.sh
+show the current ordered masternodelist queue to the luck winner to receive masternode reward in following mined blocks
+
