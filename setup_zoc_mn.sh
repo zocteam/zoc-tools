@@ -3,18 +3,22 @@ echo "**************************************************************************
 echo "                     01coin Masternode Setup Shell Script"
 echo "                              Created by Evydder"
 echo "*******************************************************************************"
-
+homedir=$( getent passwd "$USER" | cut -d: -f6 )
 install_preqs()
 {
 	echo "*******************************************************************************"
 	echo "                           Installing Requirements"
 	echo "*******************************************************************************"
-
+	
+	issudoinstalled="$(dpkg-query -W -f='${Status}' sudo 2>/dev/null | grep -c 'ok installed')"
+	if [ $issudoinstalled = '0' ]
+	then
 	apt install -y sudo
+	fi
+	
 	sudo apt install -y software-properties-common
 	sudo add-apt-repository -y ppa:bitcoin/bitcoin
 	sudo apt update 
-	sudo apt upgrade -y 
 	sudo apt install -y build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils libboost-all-dev libdb4.8-dev libdb4.8++-dev python-virtualenv nano git openssl dnsutils
 }
 
@@ -70,6 +74,22 @@ configQuestions()
 	echo "                                    Config"
 	echo "*******************************************************************************"
 
+	#ram
+	ram="$(awk '/MemTotal/ {print $2}' /proc/meminfo)"
+	minram="1048576"
+	if [ "$ram" -le "$minram" ]
+	then
+		echo "**************************************************************"
+	while true; do
+		read -p "Would you like to setup an swapfile to help with compiling?  [Y/N] " yn
+		case $yn in
+			[Yy]* ) break;;
+			[Nn]* ) echo "This script will now close";exit;;
+			* ) echo "Please answer yes or no.";;
+		esac
+	done
+	fi
+	
 	#IP
 	vpsip=$(dig +short myip.opendns.com @resolver1.opendns.com)
 	while true; do
@@ -104,9 +124,9 @@ configQuestions()
 
 	echo "**************************************************************"
 	while true; do
-		read -p "Would you like a shell scipt to start the node?  [Y/N] " yn
+		read -p "Would you like a shell script to start the node?  [Y/N] " yn
 		case $yn in
-			[Yy]* ) echo "zeroone/zerooned -daemon ">> startZeroOne.sh;askstartonboot;break;;
+			[Yy]* ) echo "$homedir/zeroone/zerooned -daemon ">> startZeroOne.sh;askstartonboot;break;;
 			[Nn]* ) break;;
 			* ) echo "Please answer yes or no.";;
 		esac
@@ -121,6 +141,7 @@ configQuestions()
 			* ) echo "Please answer yes or no.";;
 		esac
 	done
+
 }
 
 askforprivatekey()
@@ -131,7 +152,7 @@ askforprivatekey()
 		read -p "Is this the correct private key? ${privkey} [Y/N] " yn
 		case $yn in
 			[Yy]* ) break;;
-			[Nn]* ) echo "Please type in your VPS IP address below:"; read privkey;;
+			[Nn]* ) echo "Please type in your private key below:"; read privkey;;
 			* ) echo "Please answer yes or no.";;
 		esac
 	done
@@ -154,30 +175,31 @@ startonboot()
 {
 	chmod -x startZeroOne.sh
 	chmod 777 startZeroOne.sh
-	sudo echo "@reboot /root/startZeroOne.sh" >> /etc/crontab
+	sudo echo "@reboot $homedir/startZeroOne.sh" >> /etc/crontab
 }
 
 genkey()
 {
-		zeroone/zerooned -daemon
+		$homedir/zeroone/zerooned -daemon
 		echo "Please wait while the 01coin daemon generates a new private key..."
 		sleep 10
-		while ! zeroone/zeroone-cli getinfo; do
+		while ! $homedir/zeroone/zeroone-cli getinfo; do
 			sleep 10
 		done
-		privkey=$(zeroone/zeroone-cli masternode genkey)
-		killall -9 zerooned
+		privkey=$($homedir/zeroone/zeroone-cli masternode genkey)
+		$homedir/zeroone/zeroone-cli stop
+		sleep 10
 }
 
 setup_manager()
 {
-	killall zerooned
+	
 	wget https://raw.githubusercontent.com/zocteam/zoc-tools/master/mnchecker
 	chmod 777 mnchecker
 	echo "rpcport=10101" >> .zeroonecore/zeroone.conf
 
 	crontab -l > mncheckercron
-	echo "*/10 * * * * /root/mnchecker --currency-bin-cli=/root/zeroone/zeroone-cli --currency-bin-daemon=/root/zeroone/zerooned --currency-datadir=.zeroonecore" >> mncheckercron
+	echo "*/10 * * * * $homedir/mnchecker --currency-bin-cli=$homedir/zeroone/zeroone-cli --currency-bin-daemon=$homedir/zeroone/zerooned --currency-datadir=.zeroonecore" >> mncheckercron
 	crontab mncheckercron
 	rm mncheckercron
 }
@@ -215,6 +237,15 @@ sentinel()
 	rm mycron
 	cd ~
 }
+bootstrap()
+{
+	cd $homedir
+    cd .zeroonecore
+    rm -f bootstrap.dat.old
+    wget https://files.01coin.io/mainnet/bootstrap.dat.tar.gz
+    tar xvf bootstrap.dat.tar.gz
+    rm -f bootstrap.dat.tar.gz
+}
 
 start_mn()
 {
@@ -222,14 +253,15 @@ start_mn()
 	echo "                         Starting 01coin Masternode"
 	echo "*******************************************************************************"
 
-	zeroone/zerooned -daemon -assumevalid=0000000005812118515c654ab36f46ef2b7b3732a6115271505724ff972417c7
+	$homedir/zeroone/zerooned -daemon -assumevalid=0000000005812118515c654ab36f46ef2b7b3732a6115271505724ff972417c7
 	echo 'If the above says "ZeroOne Core server starting" then masternode is installed' 
 
 }
 
 adds_nodes()
 {
-	killall zerooned
+	$homedir/zeroone/zeroone-cli stop
+	sleep 10
 	#fixes error if folders dont exist
 	if [ ! -d ".zeroonecore" ]; then
 		mkdir .zeroonecore 
@@ -282,6 +314,20 @@ case $release in
 	esac
 }
 
+#checks if install is there and ask if want reset it
+if [ -d ".zeroonecore" ]; then
+	echo "*******************************************************************************"
+	echo "                                An Existing Setup Detected"
+	echo "*******************************************************************************"
+	while true; do
+		read -p "Would you like to reset the install?  [Y/N] " yn
+		case $yn in
+			[Yy]* ) sudo rm -R .zeroonecore/;break;;
+			[Nn]* ) exit 1;break;;
+			* ) echo "Please answer yes or no.";;
+		esac
+	done
+	fi	
 #checks args then runs the functions
 case $1 in
 compile)
@@ -290,6 +336,7 @@ compile)
 	configQuestions
 	sentinel
 	config
+	bootstrap
 	start_mn
 	info;;
 manager)
@@ -300,6 +347,7 @@ manager)
 	configQuestions
 	sentinel
 	config
+	bootstrap
 	start_mn
 	info
 ;;
