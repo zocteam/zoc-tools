@@ -1,14 +1,72 @@
 #!/bin/bash
+#echo "usage eg: ./zeroone.sh zeroone 10000 150 "
+#echo "call params: 0=bashname($0) 1=basedir($1), 2=port($2), 3=blockTime($3)"
+# set defauls zeroone
+if [ "$1" == "" ] ;
+then
+  # name of the coin
+  nam="zeroone"
+  # daemon port
+  dap=10000
+  # block period in seconds
+  bper=150
+  # path to sentinel conf
+  sep=~/zoc_sentinel
+fi
+# set base params of other coin
+if [ "$3" != "" ] ;
+then
+  # name of other coin
+  nam=$1
+  # daemon port
+  dap=$2
+  # block period in seconds
+  bper=$3
+  # path to sentinel
+  sep=~/.${nam}core/sentinel
+fi
+# name limited to 7 chars for menu
+menunam=`echo ${nam} | head -c 7`
+# name of daemon
+dad=`echo ${nam}d`
+# name of cli
+dac=`echo ${nam}-cli`
+# path to cli
+mnc=`echo ~/${nam}/${dac}`
+# path to daemon
+mnd=`echo ~/${nam}/${dad}`
+# name of datadir
+ndd=`echo .${nam}core`
+# path to daemon conf
+cfg=`echo ~/${ndd}/${nam}.conf`
+# path to mn conf
+mfg=`echo ~/${ndd}/masternode.conf`
+# path to node debug
+mdg=`echo ~/${ndd}/debug.log`
+# path to lock
+lock=`echo ~/${ndd}/.lock`
+# set specific vars to 01vps
+if [ "$USER" == "zocuser" ] ;
+then
+  # 01vps uses zocuser
+  sep=~/sentinel
+fi
+# path to sentinel conf
+scf=$sep/sentinel.conf
 
 print_01coin() {
 echo "*******************************************************************************"
 echo "                 01Coin - The future is in your hands! (c) 2018 "
 echo "*******************************************************************************"
+echo " The MN menu tool: $0 coinBaseDir externalTcpPort blockTimeSeconds"
+echo " usage eg: ./zeroone.sh "
+echo " usage eg: ./zeroone.sh zeroone 10000 150 "
+echo " usage eg: ./zeroone.sh absolute 18888 150 "
 }
 
 print_menu_head() {
 echo "*******************************************************************************"
-echo "             ZeroOne Core Masternode Menu (shell script user friend)"
+echo "             $menunam Core Masternode Menu (shell script user friend) "
 echo "*******************************************************************************"
 }
 
@@ -69,7 +127,7 @@ menu_advanced() {
 print_menu_debug() {
     print_menu_head
    #echo "*******************************************************************************"
-    echo " 1) tail -f debug.log   4) nano zeroone.conf           7) Quit"
+    echo " 1) tail -f debug.log   4) nano $menunam.conf           7) Quit"
     echo " 2) clean debug.log     5) nano masternode.conf        8) Back"
     echo " 3) crontab -e          6) nano sentinel.conf          9) OS-infos"
 }
@@ -79,12 +137,12 @@ menu_debug() {
     while true; do
         read -p "Please enter your choice (any other to show menu):" menu
         case $menu in
-            [1]* ) tail -f ~/.zeroonecore/debug.log;;
-            [2]* ) echo 1>~/.zeroonecore/debug.log;;
+            [1]* ) tail -f $mdg;;
+            [2]* ) echo 1>$mdg;;
             [3]* ) crontab -e;;
-            [4]* ) nano ~/.zeroonecore/zeroone.conf;;
-            [5]* ) nano ~/.zeroonecore/masternode.conf;;
-            [6]* ) nano ~/zoc_sentinel/sentinel.conf;;
+            [4]* ) nano $cfg;;
+            [5]* ) nano $mfg;;
+            [6]* ) nano $scf;;
             [7]* ) quit;;
             [8]* ) break;;
             [9]* ) os_infos;;
@@ -95,23 +153,28 @@ menu_debug() {
 
 start_mn() {
     cd ~
-    echo "zeroone/zerooned -daemon"
-    zeroone/zerooned -daemon -assumevalid=0000000005812118515c654ab36f46ef2b7b3732a6115271505724ff972417c7
+    echo "$mnd -daemon"
+    if [ "$nam" == "zeroone" ] ;
+    then
+      $mnd -daemon -assumevalid=0000000005812118515c654ab36f46ef2b7b3732a6115271505724ff972417c7
+    else
+      $mnd -daemon
+    fi
     echo ""
 }
 
 stop_mn() {
     cd ~
-    echo "zeroone/zeroone-cli stop"
-    ztest=$(pgrep zerooned | wc -l)
-    zdpid=$(pgrep zerooned)
+    echo "$mnc stop"
+    ztest=$(pgrep $dad | wc -l)
+    zdpid=$(pgrep $dad)
     if [ $ztest -gt 0 ] ;
     then
       #echo "1. zdpid=$zdpid ztest=$ztest"
-      zeroone/zeroone-cli stop
+      $mnc stop
       sleep 10
       while true; do
-       zport=$(netstat -an|grep 10000|wc -l)
+       zport=$(netstat -an|grep $dap|wc -l)
        #echo "zport=$zport"
        if [ $zport -gt 0 ] ;
        then
@@ -121,13 +184,14 @@ stop_mn() {
           #echo " break p..."
           break
        fi
-       zdpid2=$(pgrep zerooned)
+       zdpid2=$(pgrep $dad)
        #echo "2. zdpid=$zdpid ; zdpid2=$zdpid2 "
        if [ "$zdpid" == "$zdpid2" ] && [ $ztest -eq 1 ] ;
        then
-          #echo "kill -9 $zdpid"
+          echo "kill -9 $dad"
           kill -9 $zdpid
-          rm -f ~/.zeroonecore/.lock
+          echo "rm -f $lock"
+          rm -f $lock
        else
           #echo " break k..."
           break
@@ -141,27 +205,27 @@ stop_mn() {
 
 getinfo() {
     cd ~
-    echo "zeroone/zeroone-cli getinfo"
-    zeroone/zeroone-cli getinfo
+    echo "$mnc getinfo"
+    $mnc getinfo
     echo ""
 }
 
 mnsync_status() {
     cd ~
-    echo "zeroone/zeroone-cli mnsync status"
-    zeroone/zeroone-cli mnsync status
+    echo "$mnc mnsync status"
+    $mnc mnsync status
     echo ""
 }
 
 masternode_status() {
     cd ~
-    echo "zeroone/zeroone-cli masternode status"
-    zeroone/zeroone-cli masternode status
+    echo "$mnc masternode status"
+    $mnc masternode status
     echo ""
 }
 
 mn_queue(){
-    zeroone/zeroone-cli masternode list full \
+    $mnc masternode list full \
         | grep "[^_]ENABLED 7" \
         | awk -v date="$(date +%s)" '{as=date-$7; mst=(as>$8?as:$8); sep="\t" ; print mst sep date sep $5 sep $7 sep $8 sep as}' \
         | sort -s -k1,1n \
@@ -170,18 +234,31 @@ mn_queue(){
 
 masternodelist_status() {
     cd ~
-    payee=$(zeroone/zeroone-cli masternode status | grep payee | awk -F\" {'print $4'})
-    status=$(zeroone/zeroone-cli masternode status | grep status | awk -F\" {'print $4'})
+    payee=$($mnc masternode status | grep payee | awk -F\" {'print $4'})
+    status=$($mnc masternode status | grep status | awk -F\" {'print $4'})
+    smnlst=$($mnc masternodelist full ${payee} | grep E | awk -F\  {'print $3'})
     if [ "$payee" == "" ] ;
     then
       echo "status=$status"
     else
-      echo "zeroone/zeroone-cli masternodelist json ${payee}"
-      zeroone/zeroone-cli masternodelist json ${payee}
-      #zeroone/zeroone-cli masternodelist json ${vpsip}
+      if [ "$nam" == "zeroone" ] ;
+      then
+        echo "$mnc masternodelist json ${payee}"
+        $mnc masternodelist json ${payee}
+      else
+        echo "$mnc masternodelist full ${payee}"
+        $mnc masternodelist full ${payee}
+      fi
       echo ""
-      mnpos=$(mn_queue | grep ${payee} | awk -F\  '{print $1}')
-      echo "will have luck to be a winner in about $mnpos blocks ~ $(($mnpos*150/3600)) hours."
+      echo "The $nam MN reward list state is: $smnlst"
+      if [ "$smnlst" == "ENABLED" ] ;
+      then
+        mnpos=$(mn_queue | grep ${payee} | awk -F\  '{print $1}')
+        echo "and will have luck to be a winner in about $mnpos blocks ~ $(($mnpos*$bper/3600)) hours."
+      else
+        echo "status=$status"
+        echo "smnlst=$smnlst"
+      fi
     fi
     echo ""
 }
@@ -189,28 +266,42 @@ masternodelist_status() {
 restart_reindex() {
     stop_mn
     cd ~
-    echo "zeroone/zerooned -daemon -reindex"
-    zeroone/zerooned -daemon -reindex -assumevalid=0000000005812118515c654ab36f46ef2b7b3732a6115271505724ff972417c7
+    echo "$mnd -daemon -reindex"
+    if [ "$nam" == "zeroone" ] ;
+    then
+      $mnd -daemon -reindex -assumevalid=0000000005812118515c654ab36f46ef2b7b3732a6115271505724ff972417c7
+    else
+      $mnd -daemon -reindex
+    fi
     echo ""
 }
 
 mnsync_reset() {
     cd ~
-    echo "zeroone/zeroone-cli mnsync reset"
-    zeroone/zeroone-cli mnsync reset
+    echo "$mnc mnsync reset"
+    $mnc mnsync reset
     echo ""
 }
 
 restart_bootstrap() {
     cd ~
-    cd .zeroonecore
-    rm -f bootstrap.dat.old
-    wget https://files.01coin.io/mainnet/bootstrap.dat.tar.gz
-    tar xvf bootstrap.dat.tar.gz
-    rm -f bootstrap.dat.tar.gz
+    cd $ndd
+    if [ "$nam" == "zeroone" ] ;
+    then
+      rm -f bootstrap.dat.old
+      wget https://files.01coin.io/mainnet/bootstrap.dat.tar.gz
+      tar xvf bootstrap.dat.tar.gz
+      rm -f bootstrap.dat.tar.gz
+    else
+      echo "bootstrap only works if bootstrap.dat.old is present already"
+      if [ -f bootstrap.dat.old ] ;
+      then
+        mv bootstrap.dat.old bootstrap.dat
+      fi
+    fi
     stop_mn
     cd ~
-    cd .zeroonecore
+    cd $ndd
     rm -rf blocks chainstate database fee_estimates.dat mempool.dat netfulfilled.dat db.log governance.dat mncache.dat peers.dat .lock zerooned.pid banlist.dat debug.log mnpayments.dat
     start_mn
     echo ""
@@ -218,24 +309,24 @@ restart_bootstrap() {
 
 sentinel() {
     cd ~
-    echo "cd zoc_sentinel && ./venv/bin/python bin/sentinel.py"
-    cd zoc_sentinel && ./venv/bin/python bin/sentinel.py
+    echo "cd $sep && ./venv/bin/python bin/sentinel.py"
+    cd $sep && ./venv/bin/python bin/sentinel.py
     cd ~
     echo ""
 }
 
 sentinel_debug() {
     cd ~
-    echo "cd zoc_sentinel && SENTINEL_DEBUG=1 ./venv/bin/python bin/sentinel.py"
-    cd zoc_sentinel && SENTINEL_DEBUG=1 ./venv/bin/python bin/sentinel.py
+    echo "cd $sep && SENTINEL_DEBUG=1 ./venv/bin/python bin/sentinel.py"
+    cd $sep && SENTINEL_DEBUG=1 ./venv/bin/python bin/sentinel.py
     cd ~
     echo ""
 }
 
 sentinel_force() {
     cd ~
-    echo "cd zoc_sentinel && ./venv/bin/python bin/sentinel.py -b"
-    cd zoc_sentinel && ./venv/bin/python bin/sentinel.py -b
+    echo "cd $sep && ./venv/bin/python bin/sentinel.py -b"
+    cd $sep && ./venv/bin/python bin/sentinel.py -b
     cd ~
     echo ""
 }
@@ -244,10 +335,10 @@ info() {
     echo "*******************************************************************************"
     echo "                 01Coin - The future is in your hands! (c) 2018 "
     echo "*******************************************************************************"
-    echo ""
-    echo " To manually start the MN : zeroone/zerooned -daemon  "
-    echo " To check the node status : zeroone/zeroone-cli getinfo "
-    echo " To check  the  MN status : zeroone/zeroone-cli masternode status "
+    echo " $nam: "
+    echo " To manually start the MN : $nam/$dad -daemon "
+    echo " To check the node status : $nam/$dac getinfo "
+    echo " To check  the  MN status : $nam/$dac masternode status "
     echo ""
     echo " If you need help please ask in the Discord server: https://discord.gg/sFYnBpu "
     echo ""
