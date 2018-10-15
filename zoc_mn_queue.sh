@@ -1,4 +1,5 @@
 #!/bin/sh
+echo -e "nr\tstartorpaid\tcurrentime\tpayee-payee-payee-payee-payee-paye\truntime\tlastpaidtime\tstarttime"
 mn_queue(){
 ~/zeroone/zeroone-cli masternode list full \
         | grep "[^_]ENABLED 7" \
