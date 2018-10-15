@@ -22,4 +22,4 @@ This tool is a user-friendly 01Coin masternode utility menu. It allows easy, men
 This is a simple python script to help calculate the ZOC max coin supply (note that it includes the disabled premine, so user must factor it manually).
 
 ## zoc_mn_queue.sh
-This tool shows the current reward selection queue for all network-enabled masternodes. Note that the top 10% of masterodes in this list are slected for reward pseudo-randomly and not sequentially.
+This tool shows the current reward selection queue for all network-enabled masternodes. Note that the top 10% of masterodes in this list are selected for reward pseudo-randomly and not sequentially.
