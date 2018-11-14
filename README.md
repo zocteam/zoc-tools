@@ -23,3 +23,6 @@ This is a simple python script to help calculate the ZOC max coin supply (note t
 
 ## zoc_mn_queue.sh
 This tool shows the current reward selection queue for all network-enabled masternodes. Note that the top 10% of masterodes in this list are selected for reward pseudo-randomly and not sequentially.
+
+## tzoc_mn_queue.sh
+This tool shows the current reward selection queue for all network-enabled test masternodes. Note that the top 10% of masterodes in this list are selected for reward pseudo-randomly and not sequentially.
