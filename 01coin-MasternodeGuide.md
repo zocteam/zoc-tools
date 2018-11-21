@@ -5,7 +5,7 @@ Date: October 14, 2018
 
 # Prerequisites 
 
-To setup a 01coin masternode, you will needÖ
+To setup a 01coin masternode, you will need‚Ä¶
 
 + A local computer running a modern version of Windows, Mac or a Debian-based Linux distro such as Ubuntu.
 + A remote server (Virtual Private Server or "VPS") running a headless version of Ubuntu 16.04.
@@ -25,9 +25,9 @@ Once your wallet is fully synced with the network, it is recommended that you en
 
 Next, you will create a collateral address for your masternode. This is where the coins for your masternode will be stored.
 
-Click on the *Receive* tab and enter a label to help you easily identify your masternode. It might be a good idea to call it something like Masternode01 in case you decide to launch more ZOC masternodes later. Leave all other fields blank and make sure to *uncheck* ìRequest InstantSend.î 
+Click on the *Receive* tab and enter a label to help you easily identify your masternode. It might be a good idea to call it something like Masternode01 in case you decide to launch more ZOC masternodes later. Leave all other fields blank and make sure to *uncheck* ‚ÄúRequest InstantSend.‚Äù 
 
-Then click ìRequest paymentî and a window will pop up with your new ZOC address. Click ìCopy Addressî and then ìClose.î
+Then click ‚ÄúRequest payment‚Äù and a window will pop up with your new ZOC address. Click ‚ÄúCopy Address‚Äù and then ‚ÄúClose.‚Äù
 
 ![](https://cdn.steemitimages.com/DQmRZp64ks82PjnaT7tET4fx1Z2fBYiNNzGpLKuMYrJGZTb/image.png)
 
@@ -35,9 +35,9 @@ Then click ìRequest paymentî and a window will pop up with your new ZOC address.
 
 The next step is to send *exactly* 1000 ZOC to your masternode collateral address. If you already have at least 1001 ZOC in your wallet, you can do this in one step. If your coins are on an exchange, however, you will first have to send at least 1001 ZOC to your address.
 
-Click on the *Send* tab, and paste the address you just copied into the ìPay Toî field. Confirm that the label you created for that address (e.g., ìMasternode01î) automatically appears in the ìLabelî field. Type 1000 into the ìAmountî field and ensure that the ìSubtract fee from amountî box is *unchecked*. 
+Click on the *Send* tab, and paste the address you just copied into the ‚ÄúPay To‚Äù field. Confirm that the label you created for that address (e.g., ‚ÄúMasternode01‚Äù) automatically appears in the ‚ÄúLabel‚Äù field. Type 1000 into the ‚ÄúAmount‚Äù field and ensure that the ‚ÄúSubtract fee from amount‚Äù box is *unchecked*. 
 
-Then click ìSendî to initiate the transaction. You may have to key in your wallet password if it is locked. A pop up window will appear detailing the transaction fees and asking you to confirm the transaction. Click ìYesî to proceed. 
+Then click ‚ÄúSend‚Äù to initiate the transaction. You may have to key in your wallet password if it is locked. A pop up window will appear detailing the transaction fees and asking you to confirm the transaction. Click ‚ÄúYes‚Äù to proceed. 
 
 ![](https://cdn.steemitimages.com/DQmNVNoXZVL1FBmceoY9xpMvJ8GoQ1dbzXwVu2uhNxJDtoC/image.png)
 
@@ -57,7 +57,7 @@ This will return your TXID and index numbers for your masternode collateral tran
 
 Copy both numbers and paste them into a text file. You will need them later. Go ahead and close your wallet now by going to File > Exit.
 
-*Important note:* Heed the consoleís red-text warning! Many people have been swindled by scammers telling them to type things like `dumpprivkey` and `dumpwallet` into this console window. Stay on your toes; stay safe; keep your coins!
+*Important note:* Heed the console‚Äôs red-text warning! Many people have been swindled by scammers telling them to type things like `dumpprivkey` and `dumpwallet` into this console window. Stay on your toes; stay safe; keep your coins!
 
 # Stage 2: Setup Your Remote Server
 
@@ -77,13 +77,13 @@ After logging into your account, go to Services > Order New Services. Here you w
 
 ![](https://cdn.steemitimages.com/DQmSwbNTBk9qhEu6iZKohe8vuGh4J1YzV18W3A4pnMuUxMd/image.png)
 
-Select the server you want to order (Extra Small packages are sufficient to host a 01coin masternode) and configure it with a hostname and password. Make sure to use a complex password otherwise you may lose control of your server to a password-guessing bot. We recommed using a service such as LastPass for password generation and storage. The password you choose here will be emailed to you, so provided you keep that email or copy the password somewhere safe you wonít lose access to your server even if you forget it.
+Select the server you want to order (Extra Small packages are sufficient to host a 01coin masternode) and configure it with a hostname and password. Make sure to use a complex password otherwise you may lose control of your server to a password-guessing bot. We recommed using a service such as LastPass for password generation and storage. The password you choose here will be emailed to you, so provided you keep that email or copy the password somewhere safe you won‚Äôt lose access to your server even if you forget it.
 
 Below that, select your operating system. You will see that there are a number of Linux distros available for you to choose from. The one we recommend you choose to install is:
 
 ```ubuntu-16.04-x86_64-masternodeready```
 
-It is selected by default. Next, click ìContinue,î confirm your order on the next screen (and enter any promo codes that may be available) and click ìCheckoutî to pay for your new VPS using ZOC. 
+It is selected by default. Next, click ‚ÄúContinue,‚Äù confirm your order on the next screen (and enter any promo codes that may be available) and click ‚ÄúCheckout‚Äù to pay for your new VPS using ZOC. 
 
 ![](https://cdn.steemitimages.com/DQmZW3xtbuF8PskXmukuCF8wJHb89heieiLHvYEQYm9g62d/image.png)
 ![](https://cdn.steemitimages.com/DQmcig2n7f7XBZF9FAyN2ZjuDDbjywZQRQZ92RFrmiNXFJB/image.png)
@@ -94,15 +94,15 @@ We recommend checking the box for InstantSend when sending your payment to 01VPS
 
 ![](https://cdn.steemitimages.com/DQme5gXHT81fyeoxHKdFDStxbDj2VCCgrLuyfmGLWcXyc99/image.png)
 
-In order for your payment to be processed, you must leave the invoice webpage open until it is marked as PAID. Once the transaction has been confirmed you will receive an Order Number. At this point, you may click ìContinue To Client Areaî at the bottom of the screen.
+In order for your payment to be processed, you must leave the invoice webpage open until it is marked as PAID. Once the transaction has been confirmed you will receive an Order Number. At this point, you may click ‚ÄúContinue To Client Area‚Äù at the bottom of the screen.
 
 ![](https://cdn.steemitimages.com/DQmfJKA3nArkWuHK449FYNhxuUN7TZn5GQyej4TBb2TLE8T/image.png)
 
-Within the client area, you will see your new server listed under ìYour Active Products/Services.î Clicking on it will take you to the management screen. Under ìVPS Managementî you will see an icon for ìRecipes.î
+Within the client area, you will see your new server listed under ‚ÄúYour Active Products/Services.‚Äù Clicking on it will take you to the management screen. Under ‚ÄúVPS Management‚Äù you will see an icon for ‚ÄúRecipes.‚Äù
 
 ![](https://cdn.steemitimages.com/DQmP82rzF2q75KgMF6Ab1vTSXK6XEKJSbcDoH5iGvBjqmzr/image.png)
 
-Click on ìRecipesî and then click ìExecuteî where it says *Fail2Ban Installation*. Confirm that you wish to cook this recipe on the pop-up screen, and then acknowledge it has been cooked. Next, click ìExecuteî where it says *01coin Masternode Setup*. Confirm that you wish to cook this recipe on the pop-up screen, and then acknowledge it has been cooked.
+Click on ‚ÄúRecipes‚Äù and then click ‚ÄúExecute‚Äù where it says *Fail2Ban Installation*. Confirm that you wish to cook this recipe on the pop-up screen, and then acknowledge it has been cooked. Next, click ‚ÄúExecute‚Äù where it says *01coin Masternode Setup*. Confirm that you wish to cook this recipe on the pop-up screen, and then acknowledge it has been cooked.
 
 ![](https://cdn.steemitimages.com/DQmewDq6xPj1RkQcT4mTAxzSDySSexoq1Pf8EdN9imirpAT/image.png)
 
@@ -122,23 +122,23 @@ Of course, we still recommend 01VPS.net, which you can sign up for at https://01
 
 ![](https://cdn.steemitimages.com/DQmdZn7ybjDECdYqVvMJPUVNTp3AFFVxe78Y5FAKUw1rLNV/image.png)
 
-Since you are free to select any VPS provider for this installation method, though, this section of the guide will assume you already have or already know how to sign up for a VPS provider of your choice. If you would like more information about how to sign up for 01VPS.net, please refer to *Stage 2 ñ Method 1* of this guide.
+Since you are free to select any VPS provider for this installation method, though, this section of the guide will assume you already have or already know how to sign up for a VPS provider of your choice. If you would like more information about how to sign up for 01VPS.net, please refer to *Stage 2 ‚Äì Method 1* of this guide.
 
 For this installation method, you will need:
 
 + A VPS server running Ubuntu 16.04.
-+ The IPv4 address for your server (or, if equipped with multiple IP addresses ñ the main address used for logging in).
-+ Your server login name (often ñ but not always ñ root).
++ The IPv4 address for your server (or, if equipped with multiple IP addresses ‚Äì the main address used for logging in).
++ Your server login name (often ‚Äì but not always ‚Äì root).
 + Your server password.
 + An SSH client such as PuTTY for Windows, Terminal for Mac, JuiceSSH for Android, etc. Please note the instructions provided in this guide will be specific to PuTTY for Windows.
 
-To login to your server, open your SSH client software. This guide will show you how to use PuTTY for Windows, but feel free to use whichever SSH client you prefer. To begin, enter your VPS serverís IPv4 address into the ìHost Name (or IP address)î field. Make sure you choose SSH as your Connection type, and leave the Port as the default 22. Then click the ìOpenî button at the bottom.
+To login to your server, open your SSH client software. This guide will show you how to use PuTTY for Windows, but feel free to use whichever SSH client you prefer. To begin, enter your VPS server‚Äôs IPv4 address into the ‚ÄúHost Name (or IP address)‚Äù field. Make sure you choose SSH as your Connection type, and leave the Port as the default 22. Then click the ‚ÄúOpen‚Äù button at the bottom.
 
 ![](https://cdn.steemitimages.com/DQmTU71Jduik2iNbQjEcMQDZ5zPSyVFjmcZNnsMNuEBtEXy/image.png)
 
-If this is your first time logging into your server, a PuTTY security alert will pop up asking you to confirm that you want to add a host key for the new connection. Click ìYes.î
+If this is your first time logging into your server, a PuTTY security alert will pop up asking you to confirm that you want to add a host key for the new connection. Click ‚ÄúYes.‚Äù
 
-Login to your server with your login name and password credentials. If you used a strong and difficult-to-type password for your VPS server as you should ñ donít fret. You can paste anything from your Windows clipboard into your SSH terminal by simply right-clicking anywhere within the PuTTY window. This tip will come in handy often.
+Login to your server with your login name and password credentials. If you used a strong and difficult-to-type password for your VPS server as you should ‚Äì don‚Äôt fret. You can paste anything from your Windows clipboard into your SSH terminal by simply right-clicking anywhere within the PuTTY window. This tip will come in handy often.
 
 ![](https://cdn.steemitimages.com/DQmasGaFp5erzGMDMjM4xFca49mP1U45xoD2FJ1HE5E6NjV/image.png)
 
@@ -173,7 +173,7 @@ When the script has finished running, you can monitor the syncing process by doi
 
 ```watch zeroone/zeroone-cli getinfo```
 
-Use Ctrl-C to exit watching. You will know you are fully synced once the top line ìAssetIDî returns 999 when you do:
+Use Ctrl-C to exit watching. You will know you are fully synced once the top line ‚ÄúAssetID‚Äù returns 999 when you do:
 
 ```watch zeroone/zeroone-cli mnsync status```
 
@@ -181,7 +181,7 @@ Once mnsync status shows an AssetID of 999, use Ctrl-C to exit watching and you 
 
 ```watch zeroone/zeroone-cli masternode status```
 
-Once you use start-alias on the local wallet to launch your masternode, the first line (ìoutpointî) should change from a row of zeroes to your masternode TXID number.
+Once you use start-alias on the local wallet to launch your masternode, the first line (‚Äúoutpoint‚Äù) should change from a row of zeroes to your masternode TXID number.
 
 Your remote VPS is now completely setup and ready for masternode activation. You may now skip to *Stage 3: Configure and Launch Your Masternode*.
 
@@ -193,7 +193,7 @@ Since this method is recommended for advanced users only, it is assumed you alre
 
 ```apt-get install sudo -y```
 
-Once youíve confirmed sudo is installed, the first thing you are going to do is make sure your VPS is up-to-date and add the Bitcoin repository:
+Once you‚Äôve confirmed sudo is installed, the first thing you are going to do is make sure your VPS is up-to-date and add the Bitcoin repository:
 
 ```sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get dist-upgrade -y && sudo apt-get install software-properties-common -y && sudo add-apt-repository ppa:bitcoin/bitcoin```
 
@@ -211,11 +211,11 @@ Once this process is complete, you may optionally attempt to add a swap file to 
 
 ```sudo fallocate -l 4G /swapfile && sudo chmod 600 /swapfile && sudo mkswap /swapfile && sudo swapon /swapfile```
 
-If this process completes successfully, move on to the next step below. If, however, it results in an error such as this oneÖ
+If this process completes successfully, move on to the next step below. If, however, it results in an error such as this one‚Ä¶
 
 ![](https://cdn.steemitimages.com/DQmQuzCrSKeBh8q642zrAdZEr8bjd67dYvM98DZySnTSFYp/image.png)
 
-Öthen your VPS provider has disabled manually adding swap space. So you might as well free up that 4GB of reserved space by doing: `sudo rm -fr /swapfile`
+‚Ä¶then your VPS provider has disabled manually adding swap space. So you might as well free up that 4GB of reserved space by doing: `sudo rm -fr /swapfile`
 
 However, if the process did complete successfully, then the next step is to set your swapfile to persist after rebooting. To accomplish this, you must edit the file system table:
 
@@ -231,7 +231,7 @@ Your system is now prepped to install a 01coin masternode. There are two options
 
 Utilizing pre-compiled binaries provided by the zocteam is desirable in particular for those who are running a low-powered VPS server for their masternode, as compiling the binaries yourself on such systems can be very time-consuming and may not even be possible in the absence of enough available virtual memory.
 
-If, on the other hand, you run a robust VPS server with lots of available memory and processing power, then compiling your own binaries from source provides assurances of security and performance optimization specific to your system. Plus ñ if youíve never done it before ñ itís fun to learn!
+If, on the other hand, you run a robust VPS server with lots of available memory and processing power, then compiling your own binaries from source provides assurances of security and performance optimization specific to your system. Plus ‚Äì if you‚Äôve never done it before ‚Äì it‚Äôs fun to learn!
 
 ### 01coin installation: Pre-compiled binaries method
 
@@ -249,11 +249,11 @@ To compile your own binaries, you must download the source code from the zocteam
 
 Once this is finished executing, continue with *Method 3* below.
 
-### Method 3: Manual setup continuedÖ
+### Method 3: Manual setup continued‚Ä¶
 
 You now have 01coin binaries installed on your VPS. Congrats! Since you must now wait for the daemon to fully sync, it is recommended you speed up the process by using a bootstrap file provided by the zocteam.
 
-```cd && mkdir -p .zeroonecore && cd .zeroonecore && wget https://files.01coin.io/mainnet/bootstrap.dat.tar.gz && tar xvzf bootstrap.dat.tar.gz && rm bootstrap.dat.tar.gz```
+```cd $HOME && mkdir -p .zeroonecore && cd .zeroonecore && wget https://files.01coin.io/mainnet/bootstrap.dat.tar.gz && tar xvzf bootstrap.dat.tar.gz && rm bootstrap.dat.tar.gz```
 
 Now open your 01coin configuration file:
 
@@ -272,7 +272,7 @@ In that file, enter the following information. Substitute the information in par
 
 Then do Ctrl-X to close, Y to confirm. 
 
-(Note: if you would like to generate a random rpcpassword for your config file instead, you may do so by doing `pwgen -s -cn 44 1` prior to editing your file. Remember ó it is not important that you remember your rpcuser or rpcpassword, just that you donít change them while the daemon is running.)
+(Note: if you would like to generate a random rpcpassword for your config file instead, you may do so by doing `pwgen -s -cn 44 1` prior to editing your file. Remember ‚Äî it is not important that you remember your rpcuser or rpcpassword, just that you don‚Äôt change them while the daemon is running.)
 
 Now launch the 01coin daemon:
 
@@ -282,7 +282,7 @@ The rather long and tedious wait to sync with the network begins. You may option
 
 ```watch ./zeroone-cli getinfo```
 
-Note that it can often take a few minutes to begin syncing ñ particularly when using the bootstrap file. Use Ctrl-C to exit watching. You will know you are fully synced once the top line ìAssetIDî returns 999 when you do:
+Note that it can often take a few minutes to begin syncing ‚Äì particularly when using the bootstrap file. Use Ctrl-C to exit watching. You will know you are fully synced once the top line ‚ÄúAssetID‚Äù returns 999 when you do:
 
 ```watch ./zeroone-cli mnsync status```
 
@@ -343,13 +343,13 @@ Once your crontab is open add the following line to the bottom of that file. Mak
 
 Once complete, do Ctrl-X and Y to save your crontab and exit, then continue with *Method 3* on the next page.
 
-### Method 3: Manual setup continuedÖ
+### Method 3: Manual setup continued‚Ä¶
 
 You may optionally choose to install a masternode manager, which will make sure that your masternode stays synced with the network. First, download the manager and set the permission to be able to execute it:
 
 ```wget -O mnchecker https://git.io/fx0v0 && chmod +x mnchecker```
 
-Next, add it to the crontab so that it checks the sync status of your masternode every 10 minutes. First, open your crontab by doing: `crontab ñe`. Then add the following line to the bottom of that file. Make sure to substitute the actual path to mnchecker and to your zeroone directory if located somewhere other than /root/. 
+Next, add it to the crontab so that it checks the sync status of your masternode every 10 minutes. First, open your crontab by doing: `crontab ‚Äìe`. Then add the following line to the bottom of that file. Make sure to substitute the actual path to mnchecker and to your zeroone directory if located somewhere other than /root/. 
 
 ```*/10 * * * * /root/mnchecker --currency-bin-cli=/root/zeroone/zeroone-cli --currency-bin-daemon=/root/zeroone/zerooned --currency-datadir=.zeroonecore```
 
@@ -357,7 +357,7 @@ You are now ready to proceed to *Stage 3* to configure and launch your masternod
 
 ```watch ./zeroone-cli masternode status```
 
-Once you use start-alias on the local wallet to launch your masternode, the first line (ìoutpointî) should change from a row of zeroes to your masternode TXID number.
+Once you use start-alias on the local wallet to launch your masternode, the first line (‚Äúoutpoint‚Äù) should change from a row of zeroes to your masternode TXID number.
 
 Your remote VPS is now completely setup and ready for masternode activation. You may now proceed to *Stage 3: Configure and Launch Your Masternode*.
 
@@ -392,11 +392,11 @@ Go to the *Masternodes* tab in your wallet and you will now see your 01coin mast
 
 ![](https://cdn.steemitimages.com/DQmaeU4Fszmj86unbY2AGfQsSZuhyG1mG9hq4NKzrWysJsD/image.png)
 
-To start your masternode, you must unlock your wallet by going to Settings > Unlock wallet and typing in your password. Click on your masternode in the *Masternodes* tab, then click the ìStart aliasî button. A window will pop up asking for confirmation, so click ìYesî to confirm. Assuming you followed all of the steps in this guide correctly, another window will pop up confirming your masternode has been successfully started!
+To start your masternode, you must unlock your wallet by going to Settings > Unlock wallet and typing in your password. Click on your masternode in the *Masternodes* tab, then click the ‚ÄúStart alias‚Äù button. A window will pop up asking for confirmation, so click ‚ÄúYes‚Äù to confirm. Assuming you followed all of the steps in this guide correctly, another window will pop up confirming your masternode has been successfully started!
 
 ![](https://cdn.steemitimages.com/DQmQy1Bj3x6hATj4hdEg8vYUw8SU2xT3YqAeh3YKS6NczeK/image.png)
 
-Once you click ìOKî on the pop-up window, you will see the status of your masternode has switched from MISSING to PRE_ENABLED.
+Once you click ‚ÄúOK‚Äù on the pop-up window, you will see the status of your masternode has switched from MISSING to PRE_ENABLED.
 
 ![](https://cdn.steemitimages.com/DQmTQz9P9ocQtxiSJyRYGVqCWjWMiw7YpyjqGic16vHyLiC/image.png)
 
@@ -406,10 +406,10 @@ Your new masternode will remain in PRE_ENABLED status for approximately 15 to 60
 
 ![](https://cdn.steemitimages.com/DQmeVgwg1zJdyZGRocyBtwcBVHeuvGnXhqYx3bSfe45K5hy/image.png)
 
-Congratulations! Your 01coin is now enabled and online. That means you are now contributing to 01coinís network consensus and supporting features such as PrivateSend and InstantSend. In exchange for your support, you should soon start receiving masternode rewards (currently worth 13 ZOC). Visit https://masternodes.online/currencies/ZOC/ to find the average masternode reward frequency, and please note that it can take up to double the average period of time to receive your first reward.
+Congratulations! Your 01coin is now enabled and online. That means you are now contributing to 01coin‚Äôs network consensus and supporting features such as PrivateSend and InstantSend. In exchange for your support, you should soon start receiving masternode rewards (currently worth 13 ZOC). Visit https://masternodes.online/currencies/ZOC/ to find the average masternode reward frequency, and please note that it can take up to double the average period of time to receive your first reward.
 
 If your masternode does not transition to ENABLED and instead goes into a status of MISSING, NEW_START_REQUIRED, POSE_BAN, SENTINEL_PING_EXPIRED or EXPIRED then it is likely you did not follow this guide correctly. You can either start over from the beginning and try to follow this guide more closely or you may choose to seek out individualized technical support to figure out what went wrong. You may find technical support for masternodes on our Discord server at https://discord.gg/wq5xD6M in the #masternodes channel.
 
-Thanks for supporting 01coin by launching a masternode ñ and rememberÖ
+Thanks for supporting 01coin by launching a masternode ‚Äì and remember‚Ä¶
 
 With 01coin, the future is in your hands!
