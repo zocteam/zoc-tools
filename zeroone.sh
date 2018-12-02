@@ -156,7 +156,7 @@ start_mn() {
     echo "$mnd -daemon"
     if [ "$nam" == "zeroone" ] ;
     then
-      $mnd -daemon -assumevalid=0000000005812118515c654ab36f46ef2b7b3732a6115271505724ff972417c7
+      $mnd -daemon -assumevalid=00000000111979cc0c39e7e3bab96ea8ae3e42d3597e473ef1cf60dd142ad2d7
     else
       $mnd -daemon
     fi
@@ -269,7 +269,7 @@ restart_reindex() {
     echo "$mnd -daemon -reindex"
     if [ "$nam" == "zeroone" ] ;
     then
-      $mnd -daemon -reindex -assumevalid=0000000005812118515c654ab36f46ef2b7b3732a6115271505724ff972417c7
+      $mnd -daemon -reindex -assumevalid=00000000111979cc0c39e7e3bab96ea8ae3e42d3597e473ef1cf60dd142ad2d7
     else
       $mnd -daemon -reindex
     fi
