@@ -69,7 +69,7 @@ Choose one of the following three methods to setup your remote server, and proce
 
 ## Method 1: Automagic installation with 01VPS.net
 
-The easiest and recommended way to set up your remote masternode server is to use 01coin's affiliated service, 01VPS.net. Register for an account at https://01vps.net/ (or https://01VPS.net/secure/aff.php?aff=7 if you want to help support the authors of this document with referral commissions).
+The easiest and recommended way to set up your remote masternode server is to use 01coin's affiliated service, 01VPS.net. Register for an account at https://01vps.net/ (or https://01VPS.net/secure/aff.php?aff=55 if you want to help support the authors of this document with referral commissions).
 
 ![](https://cdn.steemitimages.com/DQmdZn7ybjDECdYqVvMJPUVNTp3AFFVxe78Y5FAKUw1rLNV/image.png)
 
@@ -118,7 +118,7 @@ You may now skip to *Stage 3: Configure and Launch Your Masternode*.
 
 Another simplified 01coin masternode installation method is to use the semi-automated masternode setup script provided by the zocteam. The advantage of the masternode setup script is that it is provider-agnostic and will work with 01VPS.net as well as any other VPS provider of your choosing. 
 
-Of course, we still recommend 01VPS.net, which you can sign up for at https://01vps.net/ (or https://01VPS.net/secure/aff.php?aff=7 if you want to help support the authors of this document with referral commissions). 
+Of course, we still recommend 01VPS.net, which you can sign up for at https://01vps.net/ (or https://01VPS.net/secure/aff.php?aff=55 if you want to help support the authors of this document with referral commissions). 
 
 ![](https://cdn.steemitimages.com/DQmdZn7ybjDECdYqVvMJPUVNTp3AFFVxe78Y5FAKUw1rLNV/image.png)
 
@@ -382,7 +382,7 @@ Open masternode.conf for editing with a text editor such as Notepad for Windows,
 + IP:port: This is the IP address of your remote server in x.x.x.x format, followed by a colon (:) and the number 10000. The port number for a 01coin masternode is always 10000.
 + masternodeprivkey: This is the private key you generated on the remote server. 
 + collateral_output_txid: This is the 64-character transaction ID from when you sent 1000 ZOC to your masternode collateral address. You can review this by typing `masternode outputs` in the debug console of your local wallet at any time.
-+ collateral_output_index: This is the number following your collateral_output_txid when you type `masternode outputs` into your debug console. It will always be either 0 or 1.
++ collateral_output_index: This is the number following your collateral_output_txid when you type `masternode outputs` into your debug console. It will almost always be either 0 or 1.
 
 Once you have entered all of that data into masternode.conf, save it and close it. Then, reopen your 01coin wallet.
 
