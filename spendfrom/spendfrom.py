@@ -10,7 +10,7 @@
 # Assumes it will talk to a zerooned or ZeroOne-Qt running
 # on localhost.
 #
-# Depends on pip install python-bitcoinrpc ConfigParser
+# Depends on python-bitcoinrpc and ConfigParser
 # pip install python-bitcoinrpc
 # pip install configparser
 # pip install ConfigParser 
@@ -395,7 +395,7 @@ def main():
     parser.add_option("--multisigsignstep", dest="multisigsignstep", default=False, action="store_true",
                       help="Use the multisig handling just second signs")
     parser.add_option("--multisiglaststep", dest="multisiglaststep", default=False, action="store_true",
-                      help="Use the multisig handling just second signs")
+                      help="Use the multisig handling just last sign and or broadcast")
     parser.add_option("--hexredeemscript", dest="hexredeemscript", default=None,
     #parser.add_option("--hexredeemscript", dest="hexredeemscript", default="5blabla",
                       help="Use the multisig handling hexredeemscript to sign")
