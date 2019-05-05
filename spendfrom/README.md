@@ -53,3 +53,19 @@ is printed.
 
 - If the transaction is broadcasted successfully, a transaction id
 is printed.
+
+
+### Final note: ###
+
+Before using these scripts 1st backup your local "wallet.dat"... even better you can use a new and empty file "wallet.dat" for using the scripts to spend ZOC from MultiSignature address.
+The 1st time before runnig example usage, edit parameters on bat/sh file, then during the 1st run it is normal that will give a timeout error because it will call "importaddress FROMMULTISIG" and it will do a blockchain rescan for that specific address adding all transactions into the wallet.dat in use.
+
+
+### Donations are welcome:
+ 
+ if these scripts help you out please donate to 01Coin community addresses:
+ 
+    ZOC: 5AchYc7iQS7ynce7hNZ6Ya8djsbm5N9JBS
+    BTC: 33aoJAthELcSGsYZJXxV8PAHVYiDECPuJR
+    ETH: 0x1189d2c383A6533196b1A63e6FFcA69Edefce9ee (ETH or any ERC-20 Token)
+ 
