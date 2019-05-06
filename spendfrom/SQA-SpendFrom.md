@@ -28,6 +28,7 @@ If you need testnet ZOC's (tZOC), ask some in the 01coin discord channel
 ### List available spending addresses
 
 Run:
+
 ```spendfrom.py --testnet```
 
 EXPECT:
@@ -37,6 +38,7 @@ See list of addresses and balances.
 ### Send from one address
 
 Run the following, replacing $ADDRESS and $AMOUNT with an address/amount available to spend:
+
 ```spendfrom.py --testnet --from=$ADDRESS --to=nRGyg9h8wB7yGW4nwTzCvTtzAwsgJWUgbR --amount=$AMOUNT```
 
 EXPECT:
@@ -45,7 +47,8 @@ EXPECT:
 
 ### Attempt to send too much
 
-Run the following, replacing $ADDRESS with another address that is available to spend and has less than 99 testnet coins::
+Run the following, replacing $ADDRESS with another address that is available to spend and has less than 99 testnet coins:
+
 ```spendfrom.py --testnet --from=$ADDRESS --to=nRGyg9h8wB7yGW4nwTzCvTtzAwsgJWUgbR --amount=99```
 
 EXPECT: error complaining that $ADDRESS doesn't have that many coins.
@@ -54,6 +57,7 @@ EXPECT: error complaining that $ADDRESS doesn't have that many coins.
 
 Run the following, replacing $ADDRESS1 with another address that has coins, $ADDRESS2 any other address in your wallet,
 and $AMOUNT an amount less than the amount available from $ADDRESS1:
+
 ```spendfrom.py --testnet --from=$ADDRESS2,$ADDRESS1 --to=nRGyg9h8wB7yGW4nwTzCvTtzAwsgJWUgbR --amount=$AMOUNT```
 
 EXPECT:
@@ -101,7 +105,8 @@ EXPECT: error
 EXPECT: helpful error message
 
 
-# References:
-[SRC](https://github.com/gavinandresen/bitcoin-git/tree/master/contrib/spendfrom)
-[QA](https://github.com/julian-perge/QA/blob/master/SpendFrom.md)
+### References:
+[SRC:spendfrom](https://github.com/gavinandresen/bitcoin-git/tree/master/contrib/spendfrom)
+[QA:SpendFrom.md](https://github.com/julian-perge/QA/blob/master/SpendFrom.md)
+(tbd - spendfrom multisig tests)
 [KB](https://www.soroushjp.com/2014/12/20/bitcoin-multisig-the-hard-way-understanding-raw-multisignature-bitcoin-transactions/)
