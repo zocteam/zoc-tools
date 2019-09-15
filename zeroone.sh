@@ -56,7 +56,7 @@ scf=$sep/sentinel.conf
 
 print_01coin() {
 echo "*******************************************************************************"
-echo "                 01Coin - The future is in your hands! (c) 2018 "
+echo "                 01Coin - The future is in your hands! (c) 2019 "
 echo "*******************************************************************************"
 echo " The MN menu tool: $0 coinBaseDir externalTcpPort blockTimeSeconds"
 echo " usage eg: ./zeroone.sh "
@@ -130,6 +130,7 @@ print_menu_debug() {
     echo " 1) tail -f debug.log   4) nano $menunam.conf           7) Quit"
     echo " 2) clean debug.log     5) nano masternode.conf        8) Back"
     echo " 3) crontab -e          6) nano sentinel.conf          9) OS-infos"
+    echo " a) netstat -anp --wide b) ps -ef | grep $dad"
 }
 
 menu_debug() {
@@ -146,6 +147,8 @@ menu_debug() {
             [7]* ) quit;;
             [8]* ) break;;
             [9]* ) os_infos;;
+	    [a]* ) netstat -anp --wide | grep $dap;;
+	    [b]* ) ps -ef | grep $dad;;
             * ) clear; print_menu_debug; echo "Please select an option.";;
         esac
     done
@@ -156,7 +159,7 @@ start_mn() {
     echo "$mnd -daemon"
     if [ "$nam" == "zeroone" ] ;
     then
-      $mnd -daemon -assumevalid=000000006e7ed4748b94e4b5335bf1f9a0553531b25d804fa14e3634174aa8ad
+      $mnd -daemon
     else
       $mnd -daemon
     fi
@@ -269,7 +272,7 @@ restart_reindex() {
     echo "$mnd -daemon -reindex"
     if [ "$nam" == "zeroone" ] ;
     then
-      $mnd -daemon -reindex -assumevalid=000000006e7ed4748b94e4b5335bf1f9a0553531b25d804fa14e3634174aa8ad
+      $mnd -daemon -reindex
     else
       $mnd -daemon -reindex
     fi
@@ -302,7 +305,7 @@ restart_bootstrap() {
     stop_mn
     cd ~
     cd $ndd
-    rm -rf blocks chainstate database fee_estimates.dat mempool.dat netfulfilled.dat db.log governance.dat mncache.dat peers.dat .lock zerooned.pid banlist.dat debug.log mnpayments.dat
+    rm -rf blocks chainstate database fee_estimates.dat mempool.dat netfulfilled.dat db.log governance.dat mncache.dat peers* .lock zerooned.pid banlist.dat debug.log mnpayments.dat
     start_mn
     echo ""
 }
@@ -333,7 +336,7 @@ sentinel_force() {
 
 info() {
     echo "*******************************************************************************"
-    echo "                 01Coin - The future is in your hands! (c) 2018 "
+    echo "                 01Coin - The future is in your hands! (c) 2019 "
     echo "*******************************************************************************"
     echo " $nam: "
     echo " To manually start the MN : $nam/$dad -daemon "
