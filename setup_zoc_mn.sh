@@ -313,6 +313,8 @@ case $release in
 "18.04")
 	download;;
 
+"19.04")
+	download;;
 *)
 	compile;;
 	esac
