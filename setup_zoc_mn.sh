@@ -34,7 +34,8 @@ download()
 		sudo apt-get install -y libminiupnpc-dev 
 	fi
 	mkdir ~/zeroone
-	wget http://files.01coin.io/build/linux/zeroonecore-0.12.3-x86_64-linux-gnu.tar.gz
+	# wget http://files.01coin.io/build/linux/zeroonecore-0.12.3-x86_64-linux-gnu.tar.gz
+	wget https://bitbucket.org/zocteam/zeroonecoin/downloads/zeroonecore-0.12.3-x86_64-linux-gnu.tar.gz
 	tar -xvf zeroonecore-0.12.3-x86_64-linux-gnu.tar.gz
 	rm ~/zeroonecore-0.12.3-x86_64-linux-gnu.tar.gz
 	mv ~/zeroonecore-0.12.3/bin/* ~/zeroone/
@@ -309,6 +310,11 @@ case $release in
 "16.04")
 	download;;
 
+"18.04")
+	download;;
+
+"19.04")
+	download;;
 *)
 	compile;;
 	esac
