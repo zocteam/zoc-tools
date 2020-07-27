@@ -56,7 +56,7 @@ scf=$sep/sentinel.conf
 
 print_01coin() {
 echo "*******************************************************************************"
-echo "                 01Coin - The future is in your hands! (c) 2019 "
+echo "                 01Coin - The future is in your hands! (c) 2020 "
 echo "*******************************************************************************"
 echo " The MN menu tool: $0 coinBaseDir externalTcpPort blockTimeSeconds"
 echo " usage eg: ./zeroone.sh "
@@ -129,7 +129,7 @@ print_menu_debug() {
    #echo "*******************************************************************************"
     echo " 1) tail -f debug.log   4) nano $menunam.conf           7) Quit"
     echo " 2) clean debug.log     5) nano masternode.conf        8) Back"
-    echo " 3) crontab -e          6) nano sentinel.conf          9) OS-infos"
+    echo " 3) crontab -e          6) nano sentinel.conf          9) OS-info"
     echo " a) netstat -anp --wide b) ps -ef | grep $dad"
 }
 
@@ -336,7 +336,7 @@ sentinel_force() {
 
 info() {
     echo "*******************************************************************************"
-    echo "                 01Coin - The future is in your hands! (c) 2019 "
+    echo "                 01Coin - The future is in your hands! (c) 2020 "
     echo "*******************************************************************************"
     echo " $nam: "
     echo " To manually start the MN : $nam/$dad -daemon "
@@ -361,7 +361,7 @@ quit() {
 
 os_infos() {
     echo "*******************************************************************************"
-    echo "                          OS usefull informations "
+    echo "                          OS useful information "
     echo "*******************************************************************************"
     release=$(lsb_release -r -s)
     echo "release = $release"

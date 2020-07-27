@@ -1,7 +1,8 @@
 ![](https://cdn.steemitimages.com/DQmafGPkN7rQqzikhV1tKWzSKGGHoYwMn2JP61FmBkMpa7A/image.png)
 
 By: Cpt.Ale and deadthings\
-Date: October 14, 2018
+Date: October 14, 2018\
+Revised: July 26, 2020
 
 # Prerequisites 
 
@@ -237,7 +238,7 @@ If, on the other hand, you run a robust VPS server with lots of available memory
 
 To use pre-compiled binaries provided by the zocteam, the first step is to download and extract the binaries compatible with your Ubuntu 16.04 VPS:
 
-```mkdir -p zeroone && cd zeroone && sudo wget https://github.com/zocteam/zeroonecoin/releases/download/v0.12.3.4/zeroonecore-0.12.3-x86_64-linux-gnu.tar.gz && tar xvzf zeroonecore-0.12.3-x86_64-linux-gnu.tar.gz && cd zeroonecore-0.12.3/bin && mv * ~/zeroone && cd ~/zeroone && rm -rf zeroonecore-0.12.3 && rm -f zeroonecore-0.12.3-x86_64-linux-gnu.tar.gz```
+```mkdir -p zeroone && cd zeroone && sudo wget https://github.com/zocteam/zeroonecoin/releases/download/v0.12.3.7/zeroonecore-0.12.3.7-x86_64-linux-gnu.tar.gz && tar xvzf zeroonecore-0.12.3.7-x86_64-linux-gnu.tar.gz && cd zeroonecore-0.12.3/bin && mv * ~/zeroone && cd ~/zeroone && rm -rf zeroonecore-0.12.3 && rm -f zeroonecore-0.12.3.7-x86_64-linux-gnu.tar.gz```
 
 Once this is finished executing, continue with *Method 3* below.
 
