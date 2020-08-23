@@ -315,6 +315,9 @@ case $release in
 
 "19.04")
 	download;;
+
+"20.04")
+	download;;
 *)
 	compile;;
 	esac
